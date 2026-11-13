@@ -14,6 +14,7 @@ fly up, becoming their own stream in the rain — and stay there.
 [![No build step](https://img.shields.io/badge/build-none-success)](#how-its-built)
 [![Dependencies](https://img.shields.io/badge/dependencies-none-success)](#how-its-built)
 [![100% local](https://img.shields.io/badge/data-stays%20on%20your%20PC-brightgreen)](#private-by-design)
+[![Screensaver](https://img.shields.io/badge/screensaver-built--in-success)](#screensaver-windows)
 
 [Quick start](#quick-start) · [Keys](#keys) · [Notes](#notes-a-file-you-own) · [Plugin API](#plugin-api)
 
@@ -37,6 +38,8 @@ fly up, becoming their own stream in the rain — and stay there.
   🍣 rain, trails that lengthen, rain that falls *up*, and disco colours.
 - **Quietly tactile.** Optional synthesised key clicks and a soft rain bed, generated live —
   no audio files, no downloads.
+- **Takes over when you wander off.** After a few idle minutes it fills every monitor; press `N`
+  there to write a note without waking the desktop.
 - **Yours alone.** One plain-text file, one local server, no account and no cloud.
 
 | The notes list | Import a whole list | Sushi mode, falling up |
@@ -83,6 +86,46 @@ the browser instead of `notes.txt`.
 The empty page stays clean: press a key that types nothing (Enter, an arrow, Backspace) and a
 short reminder appears for five seconds. `N` and `S` only open when nothing is typed — keep
 typing and they close again, with your letters (the N or S included) going onto the page.
+
+## Screensaver (Windows)
+
+After a few idle minutes Sushi Rain fills every monitor by itself: a borderless browser window per
+screen, your notes spread across them like one wall of rain, and the time on the main screen.
+
+Press **N** while it is showing and a cursor appears in the rain — the desktop stays asleep while
+you type. **Enter** saves the note into `notes.txt` and brings your desktop back; **Esc** wakes it
+without saving. Any other key or a mouse move wakes it as before (but not while a note is being
+written).
+
+### Set it up
+
+1. **Turn Windows' own screen saver off** — *Settings → Personalization → Lock screen → Screen saver
+   → (None)* — and set **Turn off my screen after** longer than the Sushi Rain delay, so the display
+   doesn't sleep first.
+2. **Start it with Windows** — from a Command Prompt in this folder:
+
+   ```bat
+   py -3 screensaver_windows.py --install
+   ```
+
+   This adds a shortcut to your Startup folder that runs the watcher hidden with `pythonw.exe`.
+3. **Choose the delay** — Sushi Rain's Esc menu → Screensaver (default 5 minutes), or override it
+   once with `--minutes 10`.
+4. **Try it now** — Esc menu → Screensaver → **Try it now**, or:
+
+   ```bat
+   py -3 screensaver_windows.py --now --for 20
+   ```
+
+### Good to know
+
+- It uses its own throwaway browser profile in `%LOCALAPPDATA%\Sushi Rain\browser-saver`, so your
+  normal browser and its windows are untouched. Edge is used if installed, then Chrome, then
+  Firefox; force one with `--browser firefox` (or the `SUSHI_RAIN_BROWSER` environment variable).
+- It stays out of the way when the lock screen is up or a full-screen app is in front, and it keeps
+  the display awake while it is showing. Windows' own lock still works on its usual timer.
+- It runs as a normal background process — no service, no admin rights. `--stop` stops the watcher
+  and closes the rain, `--uninstall` removes the Startup shortcut, and `--dry-run` only logs.
 
 ## Notes: a file you own
 
@@ -131,10 +174,12 @@ Python standard-library server serves the files and reads/writes `notes.txt`.
 | `notelist.js` | The N notes list |
 | `importer.js` | Import notes from a list |
 | `notes.js` | Notes: Enter → a column in the rain, storage (`notes.txt` or the browser), English → sushi |
+| `saver.js` | Screensaver mode (clock, writing a note with N) and its menu section |
 | `recipe.js` | The sushi recipe raining down some columns (half-width katakana and English) |
 | `sound.js` | Synthesised sounds (Web Audio, no audio files) |
 | `panel.js` | The Esc menu |
 | `server.py` | Serves the app on 127.0.0.1:8777 and keeps `notes.txt` (Python 3 standard library only) |
+| `screensaver_windows.py` | The idle watcher: starts the rain, holds it while you write, wakes the desktop |
 | `run.cmd` | Windows launcher: starts the server and opens the page |
 
 ## Plugin API
@@ -192,7 +237,7 @@ are original.
 <div align="center">
 <br>
 
-**Sushi Rain for Windows** — the web app on its own, without the Linux screensaver.
+**Sushi Rain for Windows** — the web app, plus an idle screen saver that lets you write in the rain.
 
 <sub>Made for slow evenings, fast typists and anyone who ever wanted to type inside the rain.</sub>
 
