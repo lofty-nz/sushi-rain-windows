@@ -142,7 +142,8 @@ def locked():
                                                 wt.DWORD, ctypes.POINTER(wt.DWORD)]
         u.GetUserObjectInformationW.restype = wt.BOOL
         buf, need = ctypes.create_unicode_buffer(256), wt.DWORD(0)
-        if not u.GetUserObjectInformationW(handle, 2, buf, ctypes.sizeof(buf), ctypes.byref(need)):
+        if not u.GetUserObjectInformationW(handle, 2, ctypes.cast(buf, ctypes.c_void_p),
+                                           ctypes.sizeof(buf), ctypes.byref(need)):
             return True
         return buf.value.lower() != 'default'
     finally:
@@ -481,16 +482,17 @@ class Saver:
         self.shown_at = time.time()
         self.last_lock_check = self.shown_at
         log('rain on (%s)' % why)
-        keep_awake(True)
         if not self.dry:
+            keep_awake(True)
             self.rain.start()
 
     def hide(self, why):
         log('rain off (%s)' % why)
         self.shown_at = 0.0
         self.hide_due = 0.0
-        keep_awake(False)
-        self.rain.stop()
+        if not self.dry:
+            keep_awake(False)
+            self.rain.stop()
         if self.close_at:
             self.done = True
 
