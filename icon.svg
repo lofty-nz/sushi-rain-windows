@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="fall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00ff46" stop-opacity="0"/>
+      <stop offset="1" stop-color="#00ff46" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#020a04"/>
+  <!-- falling code columns -->
+  <g fill="url(#fall)">
+    <rect x="8" y="4" width="4" height="30" rx="1"/>
+    <rect x="18" y="10" width="4" height="40" rx="1"/>
+    <rect x="42" y="2" width="4" height="26" rx="1"/>
+    <rect x="52" y="12" width="4" height="36" rx="1"/>
+  </g>
+  <g fill="#e1ffe6" filter="url(#glow)">
+    <rect x="8" y="33" width="4" height="3" rx="1"/>
+    <rect x="18" y="49" width="4" height="3" rx="1"/>
+    <rect x="42" y="27" width="4" height="3" rx="1"/>
+    <rect x="52" y="47" width="4" height="3" rx="1"/>
+  </g>
+  <!-- the blinking block cursor -->
+  <rect x="28" y="14" width="8" height="12" rx="1" fill="#00ff5a" filter="url(#glow)"/>
+  <!-- a little salmon nigiri -->
+  <ellipse cx="32" cy="50" rx="14" ry="6" fill="#f4f1e8"/>
+  <path d="M17 46c4-7 26-7 30 0c-2 4-28 4-30 0z" fill="#ff7a4d"/>
+  <path d="M23 42.5l3 6M30 41.5l2 7M37 42l1 6" stroke="#ffd2bf" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+</svg>

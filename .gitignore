@@ -1,0 +1,7 @@
+# your own notes and settings stay on your computer
+notes.txt
+.notes-lines.json
+*.tmp
+__pycache__/
+# any lists you keep here (for importing) stay private too
+*.txt

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sushi Rain</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root { --sr-rain: #00ff46; --sr-head: #e1ffe6; --sr-text: #beffc8; --sr-hl: #00ff5a; --sr-bg: #000502; }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  #screen { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; cursor: text; }
+  /* The real text lives in this invisible textarea; it sits under the cursor so IME popups appear in the right place. */
+  #input {
+    position: fixed; left: 0; top: 0; width: 2em; height: 1.4em; opacity: 0; border: 0; padding: 0; margin: 0;
+    resize: none; overflow: hidden; background: transparent; color: transparent; caret-color: transparent;
+    font-size: 16px; white-space: pre; z-index: 1; pointer-events: none; outline: none;
+  }
+  #vignette {
+    position: fixed; inset: 0; pointer-events: none; z-index: 2;
+    background:
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.6) 100%),
+      repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.13) 2px 3px);
+  }
+  body.no-vignette #vignette { display: none; }
+  #toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%); z-index: 20; pointer-events: none;
+    font: 15px/1.4 "Noto Sans Mono CJK JP", "Noto Sans Mono", "DejaVu Sans Mono", monospace;
+    color: var(--sr-text); background: rgba(0,0,0,.82); border: 1px solid var(--sr-hl);
+    box-shadow: 0 0 18px -4px var(--sr-hl); padding: 7px 16px; border-radius: 4px;
+    opacity: 0; transition: opacity .25s; white-space: nowrap; max-width: calc(100vw - 32px); overflow: hidden; text-overflow: ellipsis;
+  }
+  #toast.show { opacity: 1; }
+  #file { display: none; }
+</style>
+</head>
+<body>
+<canvas id="screen"></canvas>
+<textarea id="input" wrap="off" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" aria-label="Type here"></textarea>
+<input type="file" id="file" accept=".txt,.md,text/plain">
+<div id="vignette"></div>
+<div id="toast" role="status"></div>
+
+<script src="core.js"></script>
+<!-- Plugins: each one only uses window.SR (see README.md). A missing plugin just doesn't load.
+     Order matters for key and dropText hooks: quick (S) and notelist (N) first, then notes (Enter), then recipe. -->
+<script src="quick.js"></script>
+<script src="notelist.js"></script>
+<script src="importer.js"></script>
+<script src="notes.js"></script>
+<script src="recipe.js"></script>
+<script src="sound.js"></script>
+<script src="panel.js"></script>
+<script>SR.start();</script>
+</body>
+</html>
