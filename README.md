@@ -137,8 +137,10 @@ Python standard-library server serves the files and reads/writes `notes.txt`.
 | `server.py` | Serves the app on 127.0.0.1:8777 and keeps `notes.txt` (Python 3 standard library only) |
 | `run.cmd` | Windows launcher: starts the server and opens the page |
 
+## Plugin API
+
 <details>
-<summary><strong>Plugin API</strong> — build your own rain</summary>
+<summary><strong>Show the plugin API</strong> — hooks, settings and drawing for custom rain</summary>
 
 Plugins are plain `<script>` files loaded after `core.js` and before `SR.start()`, and talk to the
 core only through `window.SR`.
